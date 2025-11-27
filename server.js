@@ -15,7 +15,7 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Serve static files from React build
-app.use(express.static(path.join(__dirname, '../frontend/build')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // Multer configuration for file uploads
 const storage = multer.diskStorage({
@@ -627,10 +627,11 @@ app.get('/api/health', (req, res) => {
 
 // Catch-all route to serve React app
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../frontend/build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Start Server
-app.listen(PORT, () => {
-  console.log(`🚀 Haamee Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`🚀 Haamee Server running on port ${PORT}`);
+});
 });
