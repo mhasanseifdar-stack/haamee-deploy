@@ -8,10 +8,15 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Create uploads directory
+// Create uploads directory (with error handling for read-only filesystem)
 const uploadsDir = './uploads';
-if (!fs.existsSync(uploadsDir)) {
-  fs.mkdirSync(uploadsDir);
+try {
+  if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+  }
+  console.log('✅ Uploads directory ready');
+} catch (err) {
+  console.log('⚠️ Cannot create uploads directory - using read-only mode');
 }
 
 // Serve static files from React build
